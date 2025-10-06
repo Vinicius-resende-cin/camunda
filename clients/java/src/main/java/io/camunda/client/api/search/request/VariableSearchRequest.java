@@ -21,4 +21,6 @@ import io.camunda.client.api.search.sort.VariableSort;
 
 public interface VariableSearchRequest
     extends TypedSearchRequest<VariableFilter, VariableSort, VariableSearchRequest>,
-        FinalSearchRequestStep<Variable> {}
+        FinalSearchRequestStep<Variable> {
+  VariableSearchRequest truncateValues(Boolean truncateValues);
+}

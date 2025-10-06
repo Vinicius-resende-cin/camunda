@@ -8,7 +8,14 @@ paths:
         - Variable
       operationId: searchVariables
       summary: Search variables
-      description: Search for process and local variables based on given criteria.
+      description: Search for process and local variables based on given criteria. By default, long variable values in the response are truncated.
+      parameters:
+        - name: truncateValues
+          in: query
+          required: false
+          description: Option to return full variable values in the response. If not provided, it's considered true.
+          schema:
+            type: boolean
       requestBody:
         required: false
         content:
