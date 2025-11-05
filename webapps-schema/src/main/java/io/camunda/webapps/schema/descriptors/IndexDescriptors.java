@@ -7,6 +7,7 @@
  */
 package io.camunda.webapps.schema.descriptors;
 
+import io.camunda.webapps.schema.descriptors.index.AuditLogIndex;
 import io.camunda.webapps.schema.descriptors.index.AuthorizationIndex;
 import io.camunda.webapps.schema.descriptors.index.ClusterVariableIndex;
 import io.camunda.webapps.schema.descriptors.index.DecisionIndex;
@@ -84,7 +85,8 @@ public class IndexDescriptors {
                 new ClusterVariableIndex(indexPrefix, isElasticsearch),
                 new MessageTemplate(indexPrefix, isElasticsearch),
                 new UsageMetricTemplate(indexPrefix, isElasticsearch),
-                new UsageMetricTUTemplate(indexPrefix, isElasticsearch))
+                new UsageMetricTUTemplate(indexPrefix, isElasticsearch),
+                new AuditLogIndex(indexPrefix, isElasticsearch))
             .collect(Collectors.toMap(Object::getClass, Function.identity()));
   }
 
