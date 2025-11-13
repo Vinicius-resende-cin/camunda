@@ -18,7 +18,7 @@ const mockedUseFilters = vi.mocked(useFilters);
 describe('useProcessInstanceQueryFilters', () => {
   it('should correctly map filters to request', () => {
     const mockFilters: ProcessInstanceFilters = {
-      version: 'v1.0',
+      version: '1',
       active: true,
       tenant: 'tenant1',
       ids: 'id1,id2',
@@ -34,7 +34,7 @@ describe('useProcessInstanceQueryFilters', () => {
     const {result} = renderHook(() => useProcessInstanceQueryFilters());
 
     expect(result.current.filter).toEqual({
-      processDefinitionVersionTag: 'v1.0',
+      processDefinitionVersion: 1,
       processInstanceKey: {
         $in: ['id1', 'id2'],
       },
@@ -66,7 +66,7 @@ describe('useProcessInstanceQueryFilters', () => {
       flowNodeId: 'flowNode1',
       errorMessage: 'some error message',
       incidentErrorHashCode: 321456,
-      version: 'v1.0',
+      version: '1',
     };
 
     mockedUseFilters.mockReturnValue({
@@ -79,7 +79,7 @@ describe('useProcessInstanceQueryFilters', () => {
     const {result} = renderHook(() => useProcessInstanceQueryFilters());
 
     expect(result.current.filter).toEqual({
-      processDefinitionVersionTag: 'v1.0',
+      processDefinitionVersion: 1,
       startDate: {
         $gt: '2023-01-01T00:00:00.000Z',
         $lt: '2023-01-31T00:00:00.000Z',
@@ -117,10 +117,6 @@ describe('useProcessInstanceQueryFilters', () => {
       incidentErrorHashCode: 321456,
       hasRetriesLeft: true,
     });
-    expect(result.current.filter).toHaveProperty(
-      'processDefinitionVersionTag',
-      'v1.0',
-    );
   });
 
   it('should map filters correctly with only state', () => {

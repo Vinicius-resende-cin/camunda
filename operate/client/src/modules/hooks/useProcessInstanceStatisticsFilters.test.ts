@@ -17,7 +17,7 @@ vi.mock('modules/hooks/useFilters');
 const mockedUseFilters = vi.mocked(useFilters);
 
 describe('useProcessInstanceStatisticsFilters', () => {
-  it('should correctly map filters to request and exclude processDefinitionVersionTag', () => {
+  it('should correctly map filters to request and exclude processDefinitionVersion', () => {
     const mockFilters: ProcessInstanceFilters = {
       startDateAfter: '2023-01-01',
       startDateBefore: '2023-01-31',
@@ -36,7 +36,7 @@ describe('useProcessInstanceStatisticsFilters', () => {
       flowNodeId: 'flowNode1',
       errorMessage: 'some error message',
       incidentErrorHashCode: 321456,
-      version: 'v1.0',
+      version: '1',
     };
 
     mockedUseFilters.mockReturnValue({
@@ -90,7 +90,7 @@ describe('useProcessInstanceStatisticsFilters', () => {
     const {result} = renderHook(() => useProcessInstanceStatisticsFilters());
     expect(result.current).toEqual(expectedRequest);
     expect(result.current.filter).not.toHaveProperty(
-      'processDefinitionVersionTag',
+      'processDefinitionVersion',
     );
   });
 
@@ -136,5 +136,8 @@ describe('useProcessInstanceStatisticsFilters', () => {
 
     const {result} = renderHook(() => useProcessInstanceStatisticsFilters());
     expect(result.current).toEqual(expectedRequest);
+    expect(result.current.filter).not.toHaveProperty(
+      'processDefinitionVersion',
+    );
   });
 });
