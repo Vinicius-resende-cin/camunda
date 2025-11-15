@@ -680,6 +680,7 @@ public class SearchQueryFilterMapper {
       Optional.ofNullable(filter.getFollowUpDate())
           .map(mapToOperations(OffsetDateTime.class))
           .ifPresent(builder::followUpDateOperations);
+      Optional.ofNullable(filter.getTags()).ifPresent(builder::tags);
     }
 
     return validationErrors.isEmpty()
