@@ -38,7 +38,7 @@ public record UserTaskFilter(
     List<Operation<OffsetDateTime>> completionDateOperations,
     List<Operation<OffsetDateTime>> followUpDateOperations,
     List<Operation<OffsetDateTime>> dueDateOperations,
-    List<String> tags,
+    List<Operation<String>> tagOperations,
     String type)
     implements FilterBase {
 
@@ -63,7 +63,7 @@ public record UserTaskFilter(
     private List<Operation<OffsetDateTime>> completionDateOperations;
     private List<Operation<OffsetDateTime>> followUpDateOperations;
     private List<Operation<OffsetDateTime>> dueDateOperations;
-    private List<String> tags;
+    private List<Operation<String>> tagOperations;
     private String type;
 
     public Builder userTaskKeys(final Long... values) {
@@ -277,13 +277,19 @@ public record UserTaskFilter(
       return dueDateOperations(collectValues(operation, operations));
     }
 
-    public Builder tags(final String... values) {
-      return tags(collectValuesAsList(values));
+    public Builder tagOperations(final List<Operation<String>> operations) {
+      tagOperations = addValuesToList(tagOperations, operations);
+      return this;
     }
 
-    public Builder tags(final List<String> values) {
-      tags = addValuesToList(tags, values);
-      return this;
+    public Builder tags(final String value, final String... values) {
+      return tagOperations(FilterUtil.mapDefaultToOperation(value, values));
+    }
+
+    @SafeVarargs
+    public final Builder tagOperations(
+        final Operation<String> operation, final Operation<String>... operations) {
+      return tagOperations(collectValues(operation, operations));
     }
 
     public Builder type(final String value) {
@@ -313,7 +319,7 @@ public record UserTaskFilter(
           Objects.requireNonNullElse(completionDateOperations, Collections.emptyList()),
           Objects.requireNonNullElse(followUpDateOperations, Collections.emptyList()),
           Objects.requireNonNullElse(dueDateOperations, Collections.emptyList()),
-          Objects.requireNonNullElse(tags, Collections.emptyList()),
+          Objects.requireNonNullElse(tagOperations, Collections.emptyList()),
           type);
     }
   }

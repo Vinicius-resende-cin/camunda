@@ -104,13 +104,15 @@ public class UserTaskFilterImpl
 
   @Override
   public UserTaskFilter tag(final String tag) {
-    filter.addTagsItem(tag);
+    tag(b -> b.eq(tag));
     return this;
   }
 
   @Override
-  public UserTaskFilter tags(final List<String> tags) {
-    filter.setTags(tags);
+  public UserTaskFilter tag(final Consumer<StringProperty> fn) {
+    final StringProperty property = new StringPropertyImpl();
+    fn.accept(property);
+    filter.setTags(provideSearchRequestProperty(property));
     return this;
   }
 

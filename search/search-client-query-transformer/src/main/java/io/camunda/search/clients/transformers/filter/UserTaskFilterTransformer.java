@@ -16,7 +16,6 @@ import static io.camunda.search.clients.query.SearchQueryBuilders.intOperations;
 import static io.camunda.search.clients.query.SearchQueryBuilders.longTerms;
 import static io.camunda.search.clients.query.SearchQueryBuilders.stringOperations;
 import static io.camunda.search.clients.query.SearchQueryBuilders.stringTerms;
-import static io.camunda.search.clients.query.SearchQueryBuilders.term;
 import static io.camunda.webapps.schema.descriptors.template.TaskTemplate.*;
 import static java.util.Optional.ofNullable;
 
@@ -54,7 +53,6 @@ public class UserTaskFilterTransformer extends IndexFilterTransformer<UserTaskFi
     ofNullable(getBpmnProcessIdQuery(filter.bpmnProcessIds())).ifPresent(queries::add);
     ofNullable(getElementIdQuery(filter.elementIds())).ifPresent(queries::add);
     ofNullable(getNameQuery(filter.names())).ifPresent(queries::add);
-    ofNullable(getTagsQuery(filter.tags())).ifPresent(queries::add);
     queries.addAll(getCandidateUsersQuery(filter.candidateUserOperations()));
     queries.addAll(getCandidateGroupsQuery(filter.candidateGroupOperations()));
     queries.addAll(getAssigneesQuery(filter.assigneeOperations()));
@@ -66,7 +64,7 @@ public class UserTaskFilterTransformer extends IndexFilterTransformer<UserTaskFi
     queries.addAll(getCompletionTimeQuery(filter.completionDateOperations()));
     queries.addAll(getFollowUpDateQuery(filter.followUpDateOperations()));
     queries.addAll(getDueDateQuery(filter.dueDateOperations()));
-    ofNullable(getTagsQuery(filter.tags())).ifPresent(queries::add);
+    queries.addAll(getTagsQuery(filter.tagOperations()));
 
     // Process Instance Variable Query: Check if processVariable with specified
     // varName and
@@ -161,26 +159,19 @@ public class UserTaskFilterTransformer extends IndexFilterTransformer<UserTaskFi
     return stringTerms(NAME, name);
   }
 
-  private SearchQuery getTagsQuery(final List<String> tags) {
-    // Tags filter uses AND logic: user tasks must have ALL specified tags
-    // Convert each tag to a separate term query and combine with AND
-    if (tags == null || tags.isEmpty()) {
-      return null;
-    }
-
-    final var tagQueries = tags.stream().map(tag -> term(TAGS, tag)).toList();
-
-    return and(tagQueries);
+  private List<SearchQuery> getTagsQuery(final List<Operation<String>> tags) {
+    return stringOperations(TAGS, tags);
   }
 
   private SearchQuery getProcessInstanceVariablesQuery(
       final List<VariableValueFilter> variableFilters) {
     if (variableFilters != null && !variableFilters.isEmpty()) {
       final var transformer = getVariableValueFilterTransformer();
-      final var queries = variableFilters.stream()
-          .map(transformer::apply)
-          .map((q) -> hasChildQuery(TaskJoinRelationshipType.PROCESS_VARIABLE.getType(), q))
-          .collect(Collectors.toList());
+      final var queries =
+          variableFilters.stream()
+              .map(transformer::apply)
+              .map((q) -> hasChildQuery(TaskJoinRelationshipType.PROCESS_VARIABLE.getType(), q))
+              .collect(Collectors.toList());
       return and(queries);
     }
     return null;
@@ -190,10 +181,11 @@ public class UserTaskFilterTransformer extends IndexFilterTransformer<UserTaskFi
     if (variableFilters != null && !variableFilters.isEmpty()) {
       final var transformer = getVariableValueFilterTransformer();
 
-      final var queries = variableFilters.stream()
-          .map(transformer::apply)
-          .map((q) -> hasChildQuery(TaskJoinRelationshipType.LOCAL_VARIABLE.getType(), q))
-          .collect(Collectors.toList());
+      final var queries =
+          variableFilters.stream()
+              .map(transformer::apply)
+              .map((q) -> hasChildQuery(TaskJoinRelationshipType.LOCAL_VARIABLE.getType(), q))
+              .collect(Collectors.toList());
       return and(queries);
     }
     return null;

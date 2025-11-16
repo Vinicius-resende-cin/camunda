@@ -111,12 +111,12 @@ public interface UserTaskFilter extends SearchRequestFilter {
   UserTaskFilter tag(final String tag);
 
   /**
-   * Filters user tasks by the specified tags.
+   * Filters user tasks by the specified tag using {@link StringProperty} consumer.
    *
-   * @param tags the list of tag values to filter by
+   * @param fn the tag {@link StringProperty} consumer
    * @return the updated filter
    */
-  UserTaskFilter tags(final List<String> tags);
+  UserTaskFilter tag(final Consumer<StringProperty> fn);
 
   /**
    * Filters user tasks by the specified candidate group.

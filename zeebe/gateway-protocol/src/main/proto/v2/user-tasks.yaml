@@ -436,10 +436,9 @@ components:
             - $ref: 'keys.yaml#/components/schemas/ElementInstanceKey'
           description: The key of the element instance.
         tags:
-          type: array
-          description: Filter by tags. User tasks must have all specified tags (AND logic).
-          items:
-            type: string
+          allOf:
+            - $ref: 'filters.yaml#/components/schemas/StringFilterProperty'
+          description: Filter by tags.
 
     UserTaskSearchQueryResult:
       description: User task search query response.
