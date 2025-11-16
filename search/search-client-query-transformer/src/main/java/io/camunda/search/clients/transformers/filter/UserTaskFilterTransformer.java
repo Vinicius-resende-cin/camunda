@@ -16,6 +16,7 @@ import static io.camunda.search.clients.query.SearchQueryBuilders.intOperations;
 import static io.camunda.search.clients.query.SearchQueryBuilders.longTerms;
 import static io.camunda.search.clients.query.SearchQueryBuilders.stringOperations;
 import static io.camunda.search.clients.query.SearchQueryBuilders.stringTerms;
+import static io.camunda.search.clients.query.SearchQueryBuilders.term;
 import static io.camunda.webapps.schema.descriptors.template.TaskTemplate.*;
 import static java.util.Optional.ofNullable;
 
@@ -161,18 +162,25 @@ public class UserTaskFilterTransformer extends IndexFilterTransformer<UserTaskFi
   }
 
   private SearchQuery getTagsQuery(final List<String> tags) {
-    return stringTerms(TAGS, tags);
+    // Tags filter uses AND logic: user tasks must have ALL specified tags
+    // Convert each tag to a separate term query and combine with AND
+    if (tags == null || tags.isEmpty()) {
+      return null;
+    }
+
+    final var tagQueries = tags.stream().map(tag -> term(TAGS, tag)).toList();
+
+    return and(tagQueries);
   }
 
   private SearchQuery getProcessInstanceVariablesQuery(
       final List<VariableValueFilter> variableFilters) {
     if (variableFilters != null && !variableFilters.isEmpty()) {
       final var transformer = getVariableValueFilterTransformer();
-      final var queries =
-          variableFilters.stream()
-              .map(transformer::apply)
-              .map((q) -> hasChildQuery(TaskJoinRelationshipType.PROCESS_VARIABLE.getType(), q))
-              .collect(Collectors.toList());
+      final var queries = variableFilters.stream()
+          .map(transformer::apply)
+          .map((q) -> hasChildQuery(TaskJoinRelationshipType.PROCESS_VARIABLE.getType(), q))
+          .collect(Collectors.toList());
       return and(queries);
     }
     return null;
@@ -182,11 +190,10 @@ public class UserTaskFilterTransformer extends IndexFilterTransformer<UserTaskFi
     if (variableFilters != null && !variableFilters.isEmpty()) {
       final var transformer = getVariableValueFilterTransformer();
 
-      final var queries =
-          variableFilters.stream()
-              .map(transformer::apply)
-              .map((q) -> hasChildQuery(TaskJoinRelationshipType.LOCAL_VARIABLE.getType(), q))
-              .collect(Collectors.toList());
+      final var queries = variableFilters.stream()
+          .map(transformer::apply)
+          .map((q) -> hasChildQuery(TaskJoinRelationshipType.LOCAL_VARIABLE.getType(), q))
+          .collect(Collectors.toList());
       return and(queries);
     }
     return null;
