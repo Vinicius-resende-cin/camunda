@@ -168,10 +168,11 @@ public class UserTaskFilterTransformer extends IndexFilterTransformer<UserTaskFi
       final List<VariableValueFilter> variableFilters) {
     if (variableFilters != null && !variableFilters.isEmpty()) {
       final var transformer = getVariableValueFilterTransformer();
-      final var queries = variableFilters.stream()
-          .map(transformer::apply)
-          .map((q) -> hasChildQuery(TaskJoinRelationshipType.PROCESS_VARIABLE.getType(), q))
-          .collect(Collectors.toList());
+      final var queries =
+          variableFilters.stream()
+              .map(transformer::apply)
+              .map((q) -> hasChildQuery(TaskJoinRelationshipType.PROCESS_VARIABLE.getType(), q))
+              .collect(Collectors.toList());
       return and(queries);
     }
     return null;
@@ -181,10 +182,11 @@ public class UserTaskFilterTransformer extends IndexFilterTransformer<UserTaskFi
     if (variableFilters != null && !variableFilters.isEmpty()) {
       final var transformer = getVariableValueFilterTransformer();
 
-      final var queries = variableFilters.stream()
-          .map(transformer::apply)
-          .map((q) -> hasChildQuery(TaskJoinRelationshipType.LOCAL_VARIABLE.getType(), q))
-          .collect(Collectors.toList());
+      final var queries =
+          variableFilters.stream()
+              .map(transformer::apply)
+              .map((q) -> hasChildQuery(TaskJoinRelationshipType.LOCAL_VARIABLE.getType(), q))
+              .collect(Collectors.toList());
       return and(queries);
     }
     return null;

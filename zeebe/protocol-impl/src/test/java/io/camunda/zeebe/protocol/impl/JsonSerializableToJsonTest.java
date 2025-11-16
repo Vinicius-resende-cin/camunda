@@ -2585,6 +2585,7 @@ final class JsonSerializableToJsonTest {
         "userTaskKey": 123,
         "tenantId": "<default>",
         "priority": 80,
+        "tags": [],
         "deniedReason": "Reason to deny lifecycle transition"
       }
       """

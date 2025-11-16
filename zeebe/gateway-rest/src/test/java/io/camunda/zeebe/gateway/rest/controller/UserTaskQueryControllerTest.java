@@ -80,7 +80,8 @@ public class UserTaskQueryControllerTest extends RestControllerTest {
                       "externalFormReference": "efr",
                       "processDefinitionVersion": 1,
                       "customHeaders": {},
-                      "priority": 50
+                      "priority": 50,
+                      "tags": []
                   }
               ],
               "page": {
@@ -147,7 +148,8 @@ public class UserTaskQueryControllerTest extends RestControllerTest {
                       "externalFormReference": "efr",
                       "processDefinitionVersion": 1,
                       "customHeaders": {},
-                      "priority": 50
+                      "priority": 50,
+                      "tags": []
           }
           """;
 
