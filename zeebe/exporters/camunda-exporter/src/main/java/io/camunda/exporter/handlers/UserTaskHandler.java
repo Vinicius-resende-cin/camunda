@@ -242,7 +242,10 @@ public class UserTaskHandler implements ExportHandler<TaskEntity, UserTaskRecord
         .setPriority(taskValue.getPriority())
         .setCandidateGroups(ExporterUtil.toStringArrayOrNull(taskValue.getCandidateGroupsList()))
         .setCandidateUsers(ExporterUtil.toStringArrayOrNull(taskValue.getCandidateUsersList()))
-        .setTags(taskValue.getTags() != null ? taskValue.getTags().toArray(new String[0]) : null);
+        .setTags(
+            taskValue.getTags() == null
+                ? new String[0]
+                : taskValue.getTags().toArray(String[]::new));
 
     if (!ExporterUtil.isEmpty(formKey)) {
       formCache

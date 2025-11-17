@@ -173,9 +173,11 @@ public final class BpmnUserTaskBehavior {
   }
 
   private Set<String> getTagsFromProcessInstance(final BpmnElementContext context) {
-    final var processInstance =
-        stateBehavior.getElementInstance(context.getProcessInstanceKey()).getValue();
-
+    final var elementInstance = stateBehavior.getElementInstance(context.getProcessInstanceKey());
+    if (elementInstance == null) {
+      return Collections.emptySet();
+    }
+    final var processInstance = elementInstance.getValue();
     return processInstance != null ? processInstance.getTags() : Collections.emptySet();
   }
 
