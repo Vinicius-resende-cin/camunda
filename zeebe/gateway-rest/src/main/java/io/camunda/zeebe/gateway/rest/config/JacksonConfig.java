@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.cfg.CoercionInputShape;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.camunda.zeebe.gateway.protocol.rest.AuthorizationRequest;
 import io.camunda.zeebe.gateway.protocol.rest.BasicStringFilterProperty;
 import io.camunda.zeebe.gateway.protocol.rest.BatchOperationItemStateFilterProperty;
 import io.camunda.zeebe.gateway.protocol.rest.BatchOperationStateFilterProperty;
@@ -36,6 +37,7 @@ import io.camunda.zeebe.gateway.protocol.rest.ProcessInstanceStateFilterProperty
 import io.camunda.zeebe.gateway.protocol.rest.SearchQueryPageRequest;
 import io.camunda.zeebe.gateway.protocol.rest.StringFilterProperty;
 import io.camunda.zeebe.gateway.protocol.rest.UserTaskStateFilterProperty;
+import io.camunda.zeebe.gateway.rest.deserializer.AuthorizationRequestDeserializer;
 import io.camunda.zeebe.gateway.rest.deserializer.BasicStringFilterPropertyDeserializer;
 import io.camunda.zeebe.gateway.rest.deserializer.BatchOperatioItemStateFilterPropertyDeserializer;
 import io.camunda.zeebe.gateway.rest.deserializer.BatchOperationStateFilterPropertyDeserializer;
@@ -109,6 +111,7 @@ public class JacksonConfig {
         IncidentErrorTypeFilterProperty.class, new IncidentErrorTypePropertyDeserializer());
     module.addDeserializer(
         IncidentStateFilterProperty.class, new IncidentStatePropertyDeserializer());
+    module.addDeserializer(AuthorizationRequest.class, new AuthorizationRequestDeserializer());
     return builder -> builder.modulesToInstall(modules -> modules.add(module));
   }
 
