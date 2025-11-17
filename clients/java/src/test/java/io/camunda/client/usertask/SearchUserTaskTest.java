@@ -222,21 +222,21 @@ public final class SearchUserTaskTest extends ClientRestTest {
 
     // then
     final UserTaskSearchQuery request = gatewayService.getLastRequest(UserTaskSearchQuery.class);
-    assertThat(request.getFilter().getTags()).containsExactly("urgent");
+    assertThat(request.getFilter().getTags().get$Eq()).isEqualTo("urgent");
   }
 
   @Test
-  void shouldSearchUserTaskByTags() {
+  void shouldSearchUserTaskByTagWithIn() {
     // when
     client
         .newUserTaskSearchRequest()
-        .filter(f -> f.tags(java.util.Arrays.asList("urgent", "vip", "priority-high")))
+        .filter(f -> f.tag(t -> t.in("urgent", "vip", "priority-high")))
         .send()
         .join();
 
     // then
     final UserTaskSearchQuery request = gatewayService.getLastRequest(UserTaskSearchQuery.class);
-    assertThat(request.getFilter().getTags())
+    assertThat(request.getFilter().getTags().get$In())
         .containsExactlyInAnyOrder("urgent", "vip", "priority-high");
   }
 
