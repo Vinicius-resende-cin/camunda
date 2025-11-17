@@ -42,7 +42,6 @@ describe('useProcessInstanceFilters', () => {
       getFilters: () => mockFilters,
       setFilters: vi.fn(),
       areProcessInstanceStatesApplied: vi.fn(),
-      areDecisionInstanceStatesApplied: vi.fn(),
     });
 
     const expectedRequest: GetProcessDefinitionStatisticsRequestBody = {
@@ -101,7 +100,6 @@ describe('useProcessInstanceFilters', () => {
       getFilters: () => mockFilters,
       setFilters: vi.fn(),
       areProcessInstanceStatesApplied: vi.fn(),
-      areDecisionInstanceStatesApplied: vi.fn(),
     });
 
     const expectedRequest: GetProcessDefinitionStatisticsRequestBody = {
@@ -125,7 +123,6 @@ describe('useProcessInstanceFilters', () => {
       getFilters: () => mockFilters,
       setFilters: vi.fn(),
       areProcessInstanceStatesApplied: vi.fn(),
-      areDecisionInstanceStatesApplied: vi.fn(),
     });
 
     const expectedRequest: GetProcessDefinitionStatisticsRequestBody = {
@@ -145,7 +142,6 @@ describe('useProcessInstanceFilters', () => {
       getFilters: () => mockFilters,
       setFilters: vi.fn(),
       areProcessInstanceStatesApplied: vi.fn(),
-      areDecisionInstanceStatesApplied: vi.fn(),
     });
 
     const expectedRequest: GetProcessDefinitionStatisticsRequestBody = {
@@ -166,7 +162,6 @@ describe('useProcessInstanceFilters', () => {
       getFilters: () => mockFilters,
       setFilters: vi.fn(),
       areProcessInstanceStatesApplied: vi.fn(),
-      areDecisionInstanceStatesApplied: vi.fn(),
     });
 
     const expectedRequest: GetProcessDefinitionStatisticsRequestBody = {
