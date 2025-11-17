@@ -1211,6 +1211,7 @@ public final class SearchQueryResponseMapper {
         .ownerType(OwnerTypeEnum.fromValue(authorization.ownerType()))
         .resourceType(ResourceTypeEnum.valueOf(authorization.resourceType()))
         .resourceId(resourceId)
+        .resourcePropertyName(authorization.resourcePropertyName())
         .permissionTypes(
             authorization.permissionTypes().stream()
                 .map(PermissionType::name)
