@@ -227,7 +227,15 @@
         </foreach>
       </if>
 
-      <!-- tags -->
+      <!-- tags - simple array with AND logic (like process instances) -->
+      <if test="filter.tags != null and !filter.tags.isEmpty()">
+        <foreach collection="filter.tags" item="tag">
+          AND EXISTS (Select * from ${prefix}USER_TASK_TAG t where t.USER_TASK_KEY = ut.USER_TASK_KEY
+          AND t.TAG_VALUE = #{tag})
+        </foreach>
+      </if>
+
+      <!-- tags - advanced filter operations -->
       <if test="filter.tagOperations != null and !filter.tagOperations.isEmpty()">
         AND EXISTS (Select * from ${prefix}USER_TASK_TAG t where t.USER_TASK_KEY =
         ut.USER_TASK_KEY

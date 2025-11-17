@@ -38,6 +38,7 @@ public record UserTaskFilter(
     List<Operation<OffsetDateTime>> completionDateOperations,
     List<Operation<OffsetDateTime>> followUpDateOperations,
     List<Operation<OffsetDateTime>> dueDateOperations,
+    java.util.Set<String> tags,
     List<Operation<String>> tagOperations,
     String type)
     implements FilterBase {
@@ -63,6 +64,7 @@ public record UserTaskFilter(
     private List<Operation<OffsetDateTime>> completionDateOperations;
     private List<Operation<OffsetDateTime>> followUpDateOperations;
     private List<Operation<OffsetDateTime>> dueDateOperations;
+    private java.util.Set<String> tags;
     private List<Operation<String>> tagOperations;
     private String type;
 
@@ -277,13 +279,30 @@ public record UserTaskFilter(
       return dueDateOperations(collectValues(operation, operations));
     }
 
-    public Builder tagOperations(final List<Operation<String>> operations) {
-      tagOperations = addValuesToList(tagOperations, operations);
+    public Builder tags(final String value, final String... values) {
+      if (tags == null) {
+        tags = new java.util.HashSet<>();
+      }
+      tags.add(value);
+      if (values != null) {
+        tags.addAll(java.util.Arrays.asList(values));
+      }
       return this;
     }
 
-    public Builder tags(final String value, final String... values) {
-      return tagOperations(FilterUtil.mapDefaultToOperation(value, values));
+    public Builder tags(final java.util.Set<String> values) {
+      if (tags == null) {
+        tags = new java.util.HashSet<>();
+      }
+      if (values != null) {
+        tags.addAll(values);
+      }
+      return this;
+    }
+
+    public Builder tagOperations(final List<Operation<String>> operations) {
+      tagOperations = addValuesToList(tagOperations, operations);
+      return this;
     }
 
     @SafeVarargs
@@ -319,6 +338,7 @@ public record UserTaskFilter(
           Objects.requireNonNullElse(completionDateOperations, Collections.emptyList()),
           Objects.requireNonNullElse(followUpDateOperations, Collections.emptyList()),
           Objects.requireNonNullElse(dueDateOperations, Collections.emptyList()),
+          tags,
           Objects.requireNonNullElse(tagOperations, Collections.emptyList()),
           type);
     }

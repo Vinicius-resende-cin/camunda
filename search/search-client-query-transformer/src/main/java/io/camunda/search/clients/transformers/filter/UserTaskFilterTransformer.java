@@ -64,6 +64,20 @@ public class UserTaskFilterTransformer extends IndexFilterTransformer<UserTaskFi
     queries.addAll(getCompletionTimeQuery(filter.completionDateOperations()));
     queries.addAll(getFollowUpDateQuery(filter.followUpDateOperations()));
     queries.addAll(getDueDateQuery(filter.dueDateOperations()));
+
+    // Handle simple tags (AND logic like process instances)
+    // tags are stored as a keyword list, so we need to match all provided tags
+    // expression: tags: [A, B] -> tags:A AND tags:B means
+    // the tags list must contain a tag that is equal to A and a tag that is equal to B
+    if (filter.tags() != null && !filter.tags().isEmpty()) {
+      queries.add(
+          and(
+              filter.tags().stream()
+                  .map(tag -> stringTerms(TAGS, java.util.List.of(tag)))
+                  .collect(java.util.stream.Collectors.toList())));
+    }
+
+    // Handle advanced tag operations
     queries.addAll(getTagsQuery(filter.tagOperations()));
 
     // Process Instance Variable Query: Check if processVariable with specified
