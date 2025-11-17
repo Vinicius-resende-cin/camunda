@@ -224,13 +224,16 @@
     <createTable tableName="${prefix}USER_TASK_TAG">
       <column name="USER_TASK_KEY" type="BIGINT">
         <constraints
+          primaryKey="true"
           foreignKeyName="${prefix}FK_USER_TASK_TAG_USER_TASK"
           referencedTableName="${prefix}USER_TASK"
           referencedColumnNames="USER_TASK_KEY"
           deleteCascade="true"/>
         />
       </column>
-      <column name="TAG_VALUE" type="VARCHAR(100)"/>
+      <column name="TAG_VALUE" type="VARCHAR(${userCharColumnSize})">
+        <constraints primaryKey="true"/>
+      </column>
     </createTable>
 
     <createIndex tableName="${prefix}CANDIDATE_USER"

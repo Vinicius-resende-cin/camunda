@@ -48,7 +48,7 @@ public final class ExporterUtil {
     return object == null ? defaultString : object.toString();
   }
 
-  public static String[] toStringArrayOrNull(final List<String> inputList) {
+  public static String[] toStringArrayOrNull(final java.util.Collection<String> inputList) {
     if (inputList == null || inputList.isEmpty()) {
       return null;
     }
