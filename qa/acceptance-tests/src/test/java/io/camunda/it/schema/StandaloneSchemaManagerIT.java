@@ -9,6 +9,7 @@ package io.camunda.it.schema;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 import io.camunda.it.schema.strategy.ElasticsearchBackendStrategy;
 import io.camunda.it.schema.strategy.OpenSearchBackendStrategy;
 import io.camunda.it.schema.strategy.SearchBackendStrategy;
