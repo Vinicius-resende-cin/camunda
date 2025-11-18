@@ -60,9 +60,10 @@ public class EntityTest {
     final Field[] fields = entityClass.getDeclaredFields();
 
     for (final Field field : fields) {
-      if (hasJsonIgnoreAnnotation(field)) {
+      if (hasJsonIgnoreAnnotation(field) || isStaticAndFinal(field)) {
         continue;
       }
+      // if its static final
       final var sinceVersion = getSinceVersionAnnotation(field);
       if (sinceVersion == null) {
         throw new RuntimeException(
@@ -82,6 +83,10 @@ public class EntityTest {
             .isTrue();
       }
     }
+  }
+
+  private boolean isStaticAndFinal(final Field field) {
+    return Modifier.isStatic(field.getModifiers()) && Modifier.isFinal(field.getModifiers());
   }
 
   private boolean hasJsonIgnoreAnnotation(final Field field) {

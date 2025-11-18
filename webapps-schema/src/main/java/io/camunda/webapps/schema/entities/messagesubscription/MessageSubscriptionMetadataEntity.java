@@ -23,42 +23,42 @@ public class MessageSubscriptionMetadataEntity {
   /**
    * @deprecated since 8.9
    */
-  @Deprecated private String jobType;
+  @BeforeVersion880 @Deprecated private String jobType;
 
   /**
    * @deprecated since 8.9
    */
-  @Deprecated private Integer jobRetries;
+  @BeforeVersion880 @Deprecated private Integer jobRetries;
 
   /**
    * @deprecated since 8.9
    */
-  @Deprecated private String jobWorker;
+  @BeforeVersion880 @Deprecated private String jobWorker;
 
   /**
    * @deprecated since 8.9
    */
-  @Deprecated private OffsetDateTime jobDeadline;
+  @BeforeVersion880 @Deprecated private OffsetDateTime jobDeadline;
 
   /**
    * @deprecated since 8.9
    */
-  @Deprecated private Map<String, String> jobCustomHeaders;
+  @BeforeVersion880 @Deprecated private Map<String, String> jobCustomHeaders;
 
   /**
    * @deprecated since 8.9
    */
-  @Deprecated private Long jobKey;
+  @BeforeVersion880 @Deprecated private Long jobKey;
 
   /**
    * @deprecated since 8.9
    */
-  @Deprecated private ErrorType incidentErrorType;
+  @BeforeVersion880 @Deprecated private ErrorType incidentErrorType;
 
   /**
    * @deprecated since 8.9
    */
-  @Deprecated private String incidentErrorMessage;
+  @BeforeVersion880 @Deprecated private String incidentErrorMessage;
 
   public String getMessageName() {
     return messageName;
