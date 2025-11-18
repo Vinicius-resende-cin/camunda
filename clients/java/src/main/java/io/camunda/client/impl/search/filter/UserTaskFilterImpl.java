@@ -26,6 +26,7 @@ import io.camunda.client.impl.search.filter.builder.DateTimePropertyImpl;
 import io.camunda.client.impl.search.filter.builder.IntegerPropertyImpl;
 import io.camunda.client.impl.search.filter.builder.StringPropertyImpl;
 import io.camunda.client.impl.search.filter.builder.UserTaskStatePropertyImpl;
+import io.camunda.client.impl.search.filter.builder.UserTaskTagsPropertyImpl;
 import io.camunda.client.impl.search.request.TypedSearchRequestPropertyProvider;
 import io.camunda.client.impl.util.ParseUtil;
 import java.time.OffsetDateTime;
@@ -110,7 +111,7 @@ public class UserTaskFilterImpl
 
   @Override
   public UserTaskFilter tag(final Consumer<StringProperty> fn) {
-    final StringProperty property = new StringPropertyImpl();
+    final StringProperty property = new UserTaskTagsPropertyImpl();
     fn.accept(property);
     filter.setTags(provideSearchRequestProperty(property));
     return this;

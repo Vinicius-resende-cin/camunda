@@ -70,11 +70,11 @@ public class UserTaskFilterTransformer extends IndexFilterTransformer<UserTaskFi
     // expression: tags: [A, B] -> tags:A AND tags:B means
     // the tags list must contain a tag that is equal to A and a tag that is equal to B
     if (filter.tags() != null && !filter.tags().isEmpty()) {
-      queries.add(
-          and(
-              filter.tags().stream()
-                  .map(tag -> stringTerms(TAGS, java.util.List.of(tag)))
-                  .collect(java.util.stream.Collectors.toList())));
+      final List<SearchQuery> tagQueries =
+          filter.tags().stream()
+              .map(tag -> stringTerms(TAGS, java.util.List.of(tag)))
+              .collect(Collectors.toList());
+      queries.add(and(tagQueries));
     }
 
     // Handle advanced tag operations
