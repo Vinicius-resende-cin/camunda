@@ -275,6 +275,7 @@ public final class SearchResponseMapper {
         response.getAuthorizationKey(),
         response.getOwnerId(),
         response.getResourceId(),
+        response.getResourcePropertyName(),
         EnumUtil.convert(response.getOwnerType(), OwnerType.class),
         EnumUtil.convert(response.getResourceType(), ResourceType.class),
         convertedPermissionTypes);
