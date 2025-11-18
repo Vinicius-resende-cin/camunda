@@ -86,7 +86,7 @@
           deleteCascade="true"/>
         />
       </column>
-      <column name="TAG_VALUE" type="VARCHAR(100)">
+      <column name="TAG_VALUE" type="VARCHAR(${userCharColumnSize})">
         <constraints primaryKey="true"/>
       </column>
     </createTable>
