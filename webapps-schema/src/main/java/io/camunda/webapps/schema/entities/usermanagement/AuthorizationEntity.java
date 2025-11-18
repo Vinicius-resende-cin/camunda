@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class AuthorizationEntity extends AbstractExporterEntity<AuthorizationEntity> {
 
-  @BeforeVersion880 public static final String DEFAULT_TENANT_IDENTIFIER = "<default>";
+  public static final String DEFAULT_TENANT_IDENTIFIER = "<default>";
   @BeforeVersion880 private Long authorizationKey;
   @BeforeVersion880 private String ownerId;
   @BeforeVersion880 private String ownerType;

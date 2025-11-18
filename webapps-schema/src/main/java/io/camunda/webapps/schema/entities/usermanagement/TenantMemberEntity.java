@@ -9,11 +9,13 @@ package io.camunda.webapps.schema.entities.usermanagement;
 
 import io.camunda.webapps.schema.entities.AbstractExporterEntity;
 import io.camunda.webapps.schema.entities.BeforeVersion880;
+import io.camunda.webapps.schema.entities.SinceVersion;
 import io.camunda.zeebe.protocol.record.value.EntityType;
 
 public class TenantMemberEntity extends AbstractExporterEntity<TenantMemberEntity> {
 
-  @BeforeVersion880 private String tenantId;
+  @SinceVersion(value = "8.8.0", requireDefault = false)
+  private String tenantId;
 
   @BeforeVersion880 private String memberId;
   @BeforeVersion880 private EntityType memberType;
