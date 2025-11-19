@@ -680,15 +680,13 @@ public class SearchQueryFilterMapper {
       Optional.ofNullable(filter.getFollowUpDate())
           .map(mapToOperations(OffsetDateTime.class))
           .ifPresent(builder::followUpDateOperations);
-      // Handle tags - can be either simple array (TagSet) or advanced filter (StringFilterProperty)
-      if (filter.getTags() != null) {
-        final var tags = filter.getTags();
-        if (tags instanceof java.util.List) {
-          // Simple array - use Set<String> with AND logic (like process instances)
-          builder.tags(new java.util.HashSet<>((java.util.List<String>) tags));
-        } else if (tags instanceof StringFilterProperty) {
-          // Advanced filter operations
-          builder.tagOperations(mapToOperations(String.class).apply((StringFilterProperty) tags));
+
+      if (!CollectionUtils.isEmpty(filter.getTags())) {
+        final var tagErrors = TagsValidator.validate(filter.getTags());
+        if (tagErrors.isEmpty()) {
+          ofNullable(filter.getTags()).ifPresent(builder::tags);
+        } else {
+          validationErrors.addAll(tagErrors);
         }
       }
     }
