@@ -356,7 +356,6 @@ const ElementInstanceSubTreeRoot: React.FC<Props> = observer((props) => {
         elementId={elementId}
         renderIcon={() => (
           <ElementInstanceIcon
-            elementInstanceType={elementType}
             diagramBusinessObject={businessObjects[elementId]}
             $hasLeftMargin={false}
           />
@@ -373,7 +372,6 @@ const ElementInstanceSubTreeRoot: React.FC<Props> = observer((props) => {
       elementId={elementId}
       renderIcon={() => (
         <ElementInstanceIcon
-          elementInstanceType={elementType}
           diagramBusinessObject={businessObjects[elementId]}
           $hasLeftMargin
         />
