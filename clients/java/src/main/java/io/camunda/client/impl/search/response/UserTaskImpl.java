@@ -47,6 +47,7 @@ public class UserTaskImpl implements UserTask {
   private final Integer processDefinitionVersion;
   private final Map<String, String> customHeaders;
   private final Integer priority;
+  private final List<String> tags;
 
   public UserTaskImpl(final UserTaskResult item) {
     userTaskKey = ParseUtil.parseLongOrNull(item.getUserTaskKey());
@@ -70,6 +71,7 @@ public class UserTaskImpl implements UserTask {
     processDefinitionVersion = item.getProcessDefinitionVersion();
     customHeaders = item.getCustomHeaders();
     priority = item.getPriority();
+    tags = item.getTags();
   }
 
   @Override
@@ -175,5 +177,10 @@ public class UserTaskImpl implements UserTask {
   @Override
   public Integer getPriority() {
     return priority;
+  }
+
+  @Override
+  public List<String> getTags() {
+    return tags;
   }
 }

@@ -83,4 +83,7 @@ public interface UserTask {
 
   /** Priority of the task */
   Integer getPriority();
+
+  /** Tags associated with the task */
+  List<String> getTags();
 }
