@@ -21,13 +21,13 @@ import {notificationsStore} from 'modules/stores/notifications';
 import {tracking} from 'modules/tracking';
 
 type Props = {
-  decisionDefinitionId: string;
+  decisionDefinitionKey: string;
   decisionName: string;
-  decisionVersion: string;
+  decisionVersion: number;
 };
 
 const DecisionOperations: React.FC<Props> = ({
-  decisionDefinitionId,
+  decisionDefinitionKey,
   decisionName,
   decisionVersion,
 }) => {
@@ -51,7 +51,7 @@ const DecisionOperations: React.FC<Props> = ({
               tracking.track({
                 eventName: 'definition-deletion-button',
                 resource: 'decision',
-                version: decisionVersion,
+                version: decisionVersion.toString(),
               });
               setIsDeleteModalVisible(true);
             }}
@@ -115,11 +115,11 @@ const DecisionOperations: React.FC<Props> = ({
           tracking.track({
             eventName: 'definition-deletion-confirmation',
             resource: 'decision',
-            version: decisionVersion,
+            version: decisionVersion.toString(),
           });
 
           operationsStore.applyDeleteDecisionDefinitionOperation({
-            decisionDefinitionId,
+            decisionDefinitionId: decisionDefinitionKey,
             onSuccess: () => {
               setIsOperationRunning(false);
               panelStatesStore.expandOperationsPanel();
