@@ -436,12 +436,7 @@ components:
             - $ref: 'keys.yaml#/components/schemas/ElementInstanceKey'
           description: The key of the element instance.
         tags:
-          oneOf:
-            - $ref: 'identifiers.yaml#/components/schemas/TagSet'
-            - $ref: 'filters.yaml#/components/schemas/StringFilterProperty'
-          description: >
-            Filter by tags. Can be either a simple array of tags (all tags must match - AND logic) 
-            or advanced filter operations using $eq, $neq, $in, $notIn, $exists, $like.
+          $ref: 'identifiers.yaml#/components/schemas/TagSet'
 
     UserTaskSearchQueryResult:
       description: User task search query response.

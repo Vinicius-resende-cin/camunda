@@ -26,12 +26,15 @@ import io.camunda.client.impl.search.filter.builder.DateTimePropertyImpl;
 import io.camunda.client.impl.search.filter.builder.IntegerPropertyImpl;
 import io.camunda.client.impl.search.filter.builder.StringPropertyImpl;
 import io.camunda.client.impl.search.filter.builder.UserTaskStatePropertyImpl;
-import io.camunda.client.impl.search.filter.builder.UserTaskTagsPropertyImpl;
 import io.camunda.client.impl.search.request.TypedSearchRequestPropertyProvider;
 import io.camunda.client.impl.util.ParseUtil;
+import io.camunda.client.impl.util.TagUtil;
 import java.time.OffsetDateTime;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 
 public class UserTaskFilterImpl
@@ -104,17 +107,15 @@ public class UserTaskFilterImpl
   }
 
   @Override
-  public UserTaskFilter tag(final String tag) {
-    tag(b -> b.eq(tag));
+  public UserTaskFilter tags(final Set<String> tags) {
+    TagUtil.ensureValidTags("tags", tags);
+    filter.setTags(tags);
     return this;
   }
 
   @Override
-  public UserTaskFilter tag(final Consumer<StringProperty> fn) {
-    final StringProperty property = new UserTaskTagsPropertyImpl();
-    fn.accept(property);
-    filter.setTags(provideSearchRequestProperty(property));
-    return this;
+  public UserTaskFilter tags(final String... tags) {
+    return tags(new HashSet<>(Arrays.asList(tags)));
   }
 
   @Override
