@@ -26,6 +26,7 @@ import io.camunda.zeebe.protocol.record.Record;
 import io.camunda.zeebe.protocol.record.intent.UserTaskIntent;
 import io.camunda.zeebe.protocol.record.value.UserTaskRecordValue;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
@@ -165,6 +166,7 @@ public class UserTaskExportHandler implements RdbmsExportHandler<UserTaskRecordV
         .processDefinitionVersion(value.getProcessDefinitionVersion())
         .customHeaders(value.getCustomHeaders())
         .priority(value.getPriority())
+        .tags(value.getTags() != null ? new ArrayList<>(value.getTags()) : null)
         .partitionId(record.getPartitionId())
         .build();
   }
