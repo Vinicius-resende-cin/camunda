@@ -3,6 +3,7 @@
 paths:
   /batch-operations/{batchOperationKey}:
     get:
+      x-eventually-consistent: true
       tags:
         - Batch operation
       operationId: getBatchOperation
@@ -36,10 +37,10 @@ paths:
                 $ref: "problem-detail.yaml#/components/schemas/ProblemDetail"
         "500":
           $ref: 'common-responses.yaml#/components/responses/InternalServerError'
-      x-eventually-consistent: true
 
   /batch-operations/search:
     post:
+      x-eventually-consistent: true
       tags:
         - Batch operation
       operationId: searchBatchOperations
@@ -66,10 +67,10 @@ paths:
                 $ref: "problem-detail.yaml#/components/schemas/ProblemDetail"
         "500":
           $ref: 'common-responses.yaml#/components/responses/InternalServerError'
-      x-eventually-consistent: true
 
   /batch-operations/{batchOperationKey}/cancellation:
     post:
+      x-eventually-consistent: true
       tags:
         - Batch operation
       operationId: cancelBatchOperation
@@ -104,10 +105,10 @@ paths:
                 $ref: "problem-detail.yaml#/components/schemas/ProblemDetail"
         "500":
           $ref: 'common-responses.yaml#/components/responses/InternalServerError'
-      x-eventually-consistent: true
 
   /batch-operations/{batchOperationKey}/suspension:
     post:
+      x-eventually-consistent: true
       tags:
         - Batch operation
       operationId: suspendBatchOperation
@@ -144,10 +145,10 @@ paths:
           $ref: 'common-responses.yaml#/components/responses/InternalServerError'
         "503":
           $ref: 'common-responses.yaml#/components/responses/ServiceUnavailable'
-      x-eventually-consistent: true
 
   /batch-operations/{batchOperationKey}/resumption:
     post:
+      x-eventually-consistent: true
       tags:
         - Batch operation
       operationId: resumeBatchOperation
@@ -184,10 +185,10 @@ paths:
           $ref: 'common-responses.yaml#/components/responses/InternalServerError'
         "503":
           $ref: 'common-responses.yaml#/components/responses/ServiceUnavailable'
-      x-eventually-consistent: true
 
   /batch-operation-items/search:
     post:
+      x-eventually-consistent: true
       tags:
         - Batch operation
       operationId: searchBatchOperationItems
@@ -214,7 +215,6 @@ paths:
                 $ref: "problem-detail.yaml#/components/schemas/ProblemDetail"
         "500":
           $ref: 'common-responses.yaml#/components/responses/InternalServerError'
-      x-eventually-consistent: true
 
 ## Schema definitions
 
@@ -244,7 +244,7 @@ components:
             - startDate
             - endDate
         order:
-          $ref: 'enums.yaml#/components/schemas/SortOrderEnum'
+          $ref: 'search-models.yaml#/components/schemas/SortOrderEnum'
       required:
         - field
 
@@ -360,7 +360,7 @@ components:
             - processInstanceKey
             - state
         order:
-          $ref: 'enums.yaml#/components/schemas/SortOrderEnum'
+          $ref: 'search-models.yaml#/components/schemas/SortOrderEnum'
       required:
         - field
 
@@ -396,7 +396,7 @@ components:
         processInstanceKey:
           description: The process instance key of the processed item.
           allOf:
-            - $ref: 'filters.yaml#/components/schemas/ProcessInstanceKeyFilterProperty'
+            - $ref: 'keys.yaml#/components/schemas/ProcessInstanceKeyFilterProperty'
         state:
           type: string
           description: The state of the batch operation.

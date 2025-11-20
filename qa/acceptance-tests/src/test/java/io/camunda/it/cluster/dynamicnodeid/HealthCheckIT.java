@@ -27,6 +27,7 @@ import java.time.Duration;
 import java.util.Optional;
 import java.util.UUID;
 import org.awaitility.Awaitility;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AutoClose;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -61,6 +62,7 @@ public class HealthCheckIT {
   private static final ProxyRegistry PROXY_REGISTRY = new ProxyRegistry(TOXIPROXY);
   private static URI toxiproxyS3Endpoint;
   private static ContainerProxy proxy;
+  private static final String LATENCY_TOXIC = "latency";
 
   @TestZeebe
   private final TestStandaloneBroker broker =
@@ -102,8 +104,16 @@ public class HealthCheckIT {
             "0.0.0.0",
             TOXIPROXY.getMappedPort(proxy.internalPort()),
             s3Endpoint.getPath(),
-            s3Endpoint.getPath(),
+            s3Endpoint.getQuery(),
             s3Endpoint.getFragment());
+  }
+
+  @AfterEach
+  public void cleanUp() throws IOException {
+    final var toxic = proxy.proxy().toxics().get(LATENCY_TOXIC);
+    if (toxic != null) {
+      toxic.remove();
+    }
   }
 
   @Test
@@ -113,7 +123,7 @@ public class HealthCheckIT {
     // When:
     // - toxiproxy introduces 10s latency in the HTTP calls
     // - broker tries to check health & s3 is not able to reply in time
-    proxy.proxy().toxics().latency("latency", ToxicDirection.UPSTREAM, 10000L);
+    proxy.proxy().toxics().latency(LATENCY_TOXIC, ToxicDirection.UPSTREAM, 10000L);
     // Then: health check should fail
     Awaitility.await("Until actuator" + actuator)
         .untilAsserted(() -> assertThatThrownBy(actuator::ready).isInstanceOf(Exception.class));
