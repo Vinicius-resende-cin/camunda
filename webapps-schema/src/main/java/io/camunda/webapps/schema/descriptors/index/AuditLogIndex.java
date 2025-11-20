@@ -13,7 +13,7 @@ import io.camunda.webapps.schema.descriptors.backup.Prio5Backup;
 import io.camunda.webapps.schema.entities.auditlog.AuditLogJoinRelationshipType;
 import io.camunda.webapps.schema.entities.usermanagement.EntityJoinRelation.EntityJoinRelationFactory;
 
-public class AuditLogIndex extends AbstractIndexDescriptor implements Prio5Backup {
+public class AuditLogIndex extends AbstractTemplateDescriptor implements Prio5Backup {
 
   public static final String INDEX_NAME = "audit-log";
   public static final String INDEX_VERSION = "8.9.0";

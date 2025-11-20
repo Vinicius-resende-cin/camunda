@@ -13,8 +13,6 @@ import io.camunda.webapps.schema.entities.usermanagement.EntityJoinRelation;
 
 public class AuditLogEntity extends AbstractExporterEntity<AuditLogEntity> {
 
-  // the unique id of the audit log entry
-  private String id;
   // the key of the affected entity
   private Long entityKey;
   // the type of the affected entity, i.e. the Zeebe ValueType
@@ -42,7 +40,7 @@ public class AuditLogEntity extends AbstractExporterEntity<AuditLogEntity> {
   // details
   private String operationDetails;
 
-  // searchable fields dependant on the entity type
+  // searchable fields dependent on the entity type
   private Long processDefinitionKey;
   private Long processInstanceKey;
   private Long elementInstanceKey;
@@ -76,8 +74,9 @@ public class AuditLogEntity extends AbstractExporterEntity<AuditLogEntity> {
     return entityVersion;
   }
 
-  public void setEntityVersion(final Integer entityVersion) {
+  public AuditLogEntity setEntityVersion(final Integer entityVersion) {
     this.entityVersion = entityVersion;
+    return this;
   }
 
   public Short getOperationType() {
@@ -129,8 +128,9 @@ public class AuditLogEntity extends AbstractExporterEntity<AuditLogEntity> {
     return tenantId;
   }
 
-  public void setTenantId(final String tenantId) {
+  public AuditLogEntity setTenantId(final String tenantId) {
     this.tenantId = tenantId;
+    return this;
   }
 
   public OperationState getOperationState() {
