@@ -65,7 +65,7 @@ public class UserTaskFilterTransformer extends IndexFilterTransformer<UserTaskFi
     queries.addAll(getFollowUpDateQuery(filter.followUpDateOperations()));
     queries.addAll(getDueDateQuery(filter.dueDateOperations()));
 
-    // Handle simple tags (AND logic like process instances)
+    // Handle tags (AND logic like process instances)
     // tags are stored as a keyword list, so we need to match all provided tags
     // expression: tags: [A, B] -> tags:A AND tags:B means
     // the tags list must contain a tag that is equal to A and a tag that is equal to B
@@ -76,9 +76,6 @@ public class UserTaskFilterTransformer extends IndexFilterTransformer<UserTaskFi
               .collect(Collectors.toList());
       queries.add(and(tagQueries));
     }
-
-    // Handle advanced tag operations
-    queries.addAll(getTagsQuery(filter.tagOperations()));
 
     // Process Instance Variable Query: Check if processVariable with specified
     // varName and
@@ -171,10 +168,6 @@ public class UserTaskFilterTransformer extends IndexFilterTransformer<UserTaskFi
 
   private SearchQuery getNameQuery(final List<String> name) {
     return stringTerms(NAME, name);
-  }
-
-  private List<SearchQuery> getTagsQuery(final List<Operation<String>> tags) {
-    return stringOperations(TAGS, tags);
   }
 
   private SearchQuery getProcessInstanceVariablesQuery(

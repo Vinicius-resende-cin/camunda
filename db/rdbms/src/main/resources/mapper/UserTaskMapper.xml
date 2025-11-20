@@ -235,17 +235,6 @@
         </foreach>
       </if>
 
-      <!-- tags - advanced filter operations -->
-      <if test="filter.tagOperations != null and !filter.tagOperations.isEmpty()">
-        AND EXISTS (Select * from ${prefix}USER_TASK_TAG t where t.USER_TASK_KEY =
-        ut.USER_TASK_KEY
-        <foreach collection="filter.tagOperations" item="operation">
-          AND t.TAG_VALUE
-          <include refid="io.camunda.db.rdbms.sql.Commons.operationCondition"/>
-        </foreach>
-        )
-      </if>
-
       <!-- candidate groups and users -->
       <if
         test="filter.candidateGroupOperations != null and !filter.candidateGroupOperations.isEmpty()">
@@ -372,12 +361,6 @@
   <delete id="deleteCandidateGroups" parameterType="java.lang.Long">
     DELETE
     FROM ${prefix}CANDIDATE_GROUP
-    WHERE USER_TASK_KEY = #{userTaskKey}
-  </delete>
-
-  <delete id="deleteTags" parameterType="java.lang.Long">
-    DELETE
-    FROM ${prefix}USER_TASK_TAG
     WHERE USER_TASK_KEY = #{userTaskKey}
   </delete>
 

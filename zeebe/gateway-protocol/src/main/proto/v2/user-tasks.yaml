@@ -436,7 +436,11 @@ components:
             - $ref: 'keys.yaml#/components/schemas/ElementInstanceKey'
           description: The key of the element instance.
         tags:
-          $ref: 'identifiers.yaml#/components/schemas/TagSet'
+          allOf:
+            - $ref: 'identifiers.yaml#/components/schemas/TagSet'
+          description: |
+            Tags associated with the process instance. Matches user tasks where the process instance has ALL of the provided tags (AND logic).
+            Example: tags: ["vip", "urgent"] will only match user tasks whose process instance has both the "vip" AND "urgent" tags.
 
     UserTaskSearchQueryResult:
       description: User task search query response.

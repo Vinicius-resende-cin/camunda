@@ -28,8 +28,6 @@ public interface UserTaskMapper extends ProcessBasedHistoryCleanupMapper {
 
   void deleteCandidateGroups(Long key);
 
-  void deleteTags(Long key);
-
   void migrateToProcess(UserTaskMigrationDbModel dto);
 
   Long count(UserTaskDbQuery filter);

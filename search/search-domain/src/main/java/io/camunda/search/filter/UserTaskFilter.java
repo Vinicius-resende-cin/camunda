@@ -17,6 +17,7 @@ import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public record UserTaskFilter(
     List<Long> userTaskKeys,
@@ -38,8 +39,7 @@ public record UserTaskFilter(
     List<Operation<OffsetDateTime>> completionDateOperations,
     List<Operation<OffsetDateTime>> followUpDateOperations,
     List<Operation<OffsetDateTime>> dueDateOperations,
-    java.util.Set<String> tags,
-    List<Operation<String>> tagOperations,
+    Set<String> tags,
     String type)
     implements FilterBase {
 
@@ -64,8 +64,7 @@ public record UserTaskFilter(
     private List<Operation<OffsetDateTime>> completionDateOperations;
     private List<Operation<OffsetDateTime>> followUpDateOperations;
     private List<Operation<OffsetDateTime>> dueDateOperations;
-    private java.util.Set<String> tags;
-    private List<Operation<String>> tagOperations;
+    private Set<String> tags;
     private String type;
 
     public Builder userTaskKeys(final Long... values) {
@@ -290,7 +289,7 @@ public record UserTaskFilter(
       return this;
     }
 
-    public Builder tags(final java.util.Set<String> values) {
+    public Builder tags(final Set<String> values) {
       if (tags == null) {
         tags = new java.util.HashSet<>();
       }
@@ -298,17 +297,6 @@ public record UserTaskFilter(
         tags.addAll(values);
       }
       return this;
-    }
-
-    public Builder tagOperations(final List<Operation<String>> operations) {
-      tagOperations = addValuesToList(tagOperations, operations);
-      return this;
-    }
-
-    @SafeVarargs
-    public final Builder tagOperations(
-        final Operation<String> operation, final Operation<String>... operations) {
-      return tagOperations(collectValues(operation, operations));
     }
 
     public Builder type(final String value) {
@@ -339,7 +327,6 @@ public record UserTaskFilter(
           Objects.requireNonNullElse(followUpDateOperations, Collections.emptyList()),
           Objects.requireNonNullElse(dueDateOperations, Collections.emptyList()),
           tags,
-          Objects.requireNonNullElse(tagOperations, Collections.emptyList()),
           type);
     }
   }
