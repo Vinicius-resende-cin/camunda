@@ -85,7 +85,6 @@ public final class OpenSearchBackendStrategy implements SearchBackendStrategy {
   @Override
   public void configureCamundaApplication(final TestCamundaApplication camunda) {
     camunda
-        .withAdditionalProfile(Profile.CONSOLIDATED_AUTH)
         .withUnauthenticatedAccess()
         .withProperty("camunda.database.url", url)
         .withProperty("camunda.database.type", "opensearch")

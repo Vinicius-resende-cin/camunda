@@ -64,7 +64,6 @@ import org.springframework.test.web.servlet.assertj.MvcTestResult;
       // essential for debugging the flow
       "logging.level.org.springframework.security=TRACE",
     })
-@ActiveProfiles("consolidated-auth")
 @ExtendWith(OutputCaptureExtension.class)
 class LoggingAuthenticationFailureHandlerTest {
   @RegisterExtension
