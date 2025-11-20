@@ -24,6 +24,7 @@ import io.camunda.operate.webapp.rest.exception.InternalAPIException;
 import io.camunda.operate.webapp.rest.exception.NotAuthorizedException;
 import io.camunda.operate.webapp.rest.exception.NotFoundException;
 import io.camunda.operate.webapp.transform.DataAggregator;
+import java.util.Base64;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
@@ -64,7 +65,11 @@ public class InternalAPIErrorControllerIT {
 
   @Before
   public void setup() {
-    mockGetRequest = get("/api/process-instances/123");
+    final var basicAuth = "%s:%s".formatted("demo", "demo");
+    final var encodedBasicAuth = Base64.getEncoder().encodeToString(basicAuth.getBytes());
+    mockGetRequest =
+        get("/api/process-instances/123")
+            .header("Authorization", "Basic %s".formatted(encodedBasicAuth));
     when(mockProfileService.getMessageByProfileFor(any())).thenReturn(EXCEPTION_MESSAGE);
   }
 
