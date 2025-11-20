@@ -60,8 +60,8 @@ describe('<DecisionOperations />', () => {
     const {user} = render(
       <DecisionOperations
         decisionName="myDecision"
-        decisionVersion="2"
-        decisionDefinitionId="2251799813687094"
+        decisionVersion={2}
+        decisionDefinitionKey="2251799813687094"
       />,
       {wrapper: Wrapper},
     );
@@ -94,8 +94,8 @@ describe('<DecisionOperations />', () => {
     const {user} = render(
       <DecisionOperations
         decisionName="myDecision"
-        decisionVersion="2"
-        decisionDefinitionId="2251799813687094"
+        decisionVersion={2}
+        decisionDefinitionKey="2251799813687094"
       />,
       {wrapper: Wrapper},
     );
@@ -128,8 +128,8 @@ describe('<DecisionOperations />', () => {
     const {user} = render(
       <DecisionOperations
         decisionName="myDecision"
-        decisionVersion="2"
-        decisionDefinitionId="2251799813687094"
+        decisionVersion={2}
+        decisionDefinitionKey="2251799813687094"
       />,
       {wrapper: Wrapper},
     );
@@ -166,8 +166,8 @@ describe('<DecisionOperations />', () => {
     const {user} = render(
       <DecisionOperations
         decisionName="myDecision"
-        decisionVersion="2"
-        decisionDefinitionId="2251799813687094"
+        decisionVersion={2}
+        decisionDefinitionKey="2251799813687094"
       />,
       {wrapper: Wrapper},
     );
@@ -205,8 +205,8 @@ describe('<DecisionOperations />', () => {
     const {user} = render(
       <DecisionOperations
         decisionName="myDecision"
-        decisionVersion="2"
-        decisionDefinitionId="2251799813687094"
+        decisionVersion={2}
+        decisionDefinitionKey="2251799813687094"
       />,
       {wrapper: Wrapper},
     );
@@ -257,8 +257,8 @@ describe('<DecisionOperations />', () => {
     const {user} = render(
       <DecisionOperations
         decisionName="myDecision"
-        decisionVersion="2"
-        decisionDefinitionId="2251799813687094"
+        decisionVersion={2}
+        decisionDefinitionKey="2251799813687094"
       />,
       {wrapper: Wrapper},
     );
@@ -302,8 +302,8 @@ describe('<DecisionOperations />', () => {
     const {user} = render(
       <DecisionOperations
         decisionName="myDecision"
-        decisionVersion="2"
-        decisionDefinitionId="2251799813687094"
+        decisionVersion={2}
+        decisionDefinitionKey="2251799813687094"
       />,
       {wrapper: Wrapper},
     );
